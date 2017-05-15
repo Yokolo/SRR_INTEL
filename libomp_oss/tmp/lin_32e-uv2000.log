@@ -1,0 +1,27 @@
+
+2017-04-06 14:34:44 UTC: Goals           : lib inc common -j1
+2017-04-06 14:34:44 UTC: Configurations  : 1
+2017-04-06 14:34:44 UTC: Making          :   1 of   1 : lin_32e-rtl_5_nor_dyn.rel.45.c0.s0....h0-uv2000
+2017-04-06 14:36:08 UTC: +++ Success +++ : lin_32e-rtl_5_nor_dyn.rel.45.c0.s0....h0-uv2000
+2017-04-06 14:36:08 UTC: Successes       :   1 of   1
+2017-04-06 14:36:08 UTC: Failures        :   0 of   1
+2017-04-06 14:36:08 UTC: Time elapsed    :   00:01:24
+2017-04-06 14:36:08 UTC: Overall result  : +++ Success +++
+
+2017-04-06 14:39:48 UTC: Goals           : lib inc common -j1
+2017-04-06 14:39:48 UTC: Configurations  : 1
+2017-04-06 14:39:48 UTC: Making          :   1 of   1 : lin_32e-rtl_5_nor_dyn.deb.45.c0.s0....h0-uv2000
+2017-04-06 14:40:58 UTC: +++ Success +++ : lin_32e-rtl_5_nor_dyn.deb.45.c0.s0....h0-uv2000
+2017-04-06 14:40:58 UTC: Successes       :   1 of   1
+2017-04-06 14:40:58 UTC: Failures        :   0 of   1
+2017-04-06 14:40:58 UTC: Time elapsed    :   00:01:10
+2017-04-06 14:40:58 UTC: Overall result  : +++ Success +++
+
+2017-04-06 14:41:18 UTC: Goals           : lib inc common -j1
+2017-04-06 14:41:18 UTC: Configurations  : 1
+2017-04-06 14:41:18 UTC: Making          :   1 of   1 : lin_32e-rtl_5_nor_dyn.deb.45.c0.s0....h0-uv2000
+2017-04-06 14:41:20 UTC: +++ Success +++ : lin_32e-rtl_5_nor_dyn.deb.45.c0.s0....h0-uv2000
+2017-04-06 14:41:20 UTC: Successes       :   1 of   1
+2017-04-06 14:41:20 UTC: Failures        :   0 of   1
+2017-04-06 14:41:20 UTC: Time elapsed    :   00:00:02
+2017-04-06 14:41:20 UTC: Overall result  : +++ Success +++
