@@ -1,0 +1,34 @@
+J'ai bien reconnu le schedule SRR
+__kmp_affinity_determine_capable: initial getaffinity call returned 64 errno = 0
+__kmp_affinity_determine_capable: setaffinity for mask size 64 returned -1 errno = 14
+__kmp_affinity_determine_capable: affinity supported (mask size 64)
+__kmp_register_root: entered
+__kmp_register_root: found slot in threads array: T#0
+__kmp_allocate_team: called
+__kmp_allocate_team: making a new team
+__kmp_allocate_team: setting task_team[0] 0x229eca8 and task_team[1] 0x229ecb0 to NULL
+__kmp_alloc_argv_entries: team -1: needed entries=0, current entries=0
+__kmp_alloc_argv_entries: team -1: inline allocate 27 argv entries
+__kmp_allocate_team: team -1 init arrived: join=0, plain=0
+__kmp_allocate_team: done creating a new team -1.
+__kmp_initialize_root: init root team -1 arrived: join=0, plain=0
+__kmp_allocate_team: called
+__kmp_allocate_team: making a new team
+__kmp_allocate_team: setting task_team[0] 0x22a3aa8 and task_team[1] 0x22a3ab0 to NULL
+__kmp_alloc_argv_entries: team -1: needed entries=0, current entries=0
+__kmp_alloc_argv_entries: team -1: inline allocate 27 argv entries
+__kmp_allocate_team: team -1 init arrived: join=0, plain=0
+__kmp_allocate_team: done creating a new team -1.
+__kmp_init_random: THREAD: 0; A: 2654435761
+__kmp_allocate_team: called
+__kmp_allocate_team: making a new team
+__kmp_allocate_team: setting task_team[0] 0x22a5aa8 and task_team[1] 0x22a5ab0 to NULL
+__kmp_alloc_argv_entries: team -1: needed entries=0, current entries=0
+__kmp_alloc_argv_entries: team -1: inline allocate 27 argv entries
+__kmp_allocate_team: team -1 init arrived: join=0, plain=0
+__kmp_allocate_team: done creating a new team -1.
+__kmp_create_worker: uber thread (0)
+__kmp_check_stack_overlap: called
+__kmp_check_stack_overlap: returning
+__kmp_gtid_get_specific: key:1 gtid:0
+__kmp_register_root: T#0 init T#0(-1:0) arrived: join=0, plain=0

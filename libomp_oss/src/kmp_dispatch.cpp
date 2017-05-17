@@ -308,7 +308,7 @@ unsigned *sort(unsigned *a, unsigned n)
  *
  * @returns Iteration scheduling map.
  */
-static unsigned *srr_balance(unsigned *tasks, unsigned ntasks, unsigned nthreads)
+unsigned *srr_balance(unsigned *tasks, unsigned ntasks, unsigned nthreads)
 {
     unsigned i;        /* Loop index.        */
     unsigned tid;      /* Current thread ID. */
@@ -323,7 +323,15 @@ static unsigned *srr_balance(unsigned *tasks, unsigned ntasks, unsigned nthreads
     //assert(taskmap != NULL);
     
     /* Sort tasks. */
+    for (i=0;i<ntasks;i++){
+            KD_TRACE(10,("Valeur de la case %d de la sortmap : %d \n",i,tasks[i]));
+
+     }
     sortmap = sort(tasks, ntasks);
+    for (i=0;i<ntasks;i++){
+        KD_TRACE(10,("Valeur de la case %d de la sortmap : %d \n",i,sortmap[i]));
+
+     }
     
     /* Assign tasks to threads. */
     if (ntasks & 1)
@@ -1161,13 +1169,34 @@ __kmp_dispatch_init(
         } // case
     case kmp_sch_srr :
     {
-        unsigned nproc = th->th.th_team_nproc; // nproc = number of thread in team
-        int masterid = team->t.t_master_tid; // get the masterID
+        //unsigned nproc = th->th.th_team_nproc; // nproc = number of thread in team
+        int masterid = team->t.t_master_tid; // get the masterID 
+        /*
         KD_TRACE(100,("Je suis le thread T#%d dans srr\n",gtid));
-        if (gtid = masterid){
+        if(gtid == masterid){
+            __ntasks=10;
+            __tasks=(unsigned *)malloc(__ntasks*sizeof(unsigned int));
+            unsigned int i =0;
+            for (i=0;i<__ntasks;i++){
+                __tasks[i]=i%4;
+            }
             __tmap = srr_balance(__tasks, __ntasks, nproc);
+            for(i=0;i<__ntasks;i++)
+            {
+                KD_TRACE(100,("Valeur de la case %d de la taskmap : %d \n",i,__tmap[i]));
+            }
+        }*/
+        unsigned int i =0;
+        for(i=0;i<__ntasks;i++){
+            if (__tmap[i]==(unsigned)gtid){
+                pr->srr_index=i+1;
+                pr-> u.p.lb = i;
+                pr-> u.p.ub = i+1;
+                break;
+            }
+        }
+        if (gtid == masterid){
             KD_TRACE(100,("Je suis le thread master T#%d dans srr\n",gtid));
-
         }
         break;
     } // endcase
@@ -2050,6 +2079,19 @@ __kmp_dispatch_next(
                     break;
                 } // case
             #endif // ( KMP_STATIC_STEAL_ENABLED )
+            case kmp_sch_srr:
+                {
+                    unsigned int i ;
+                    for(i= pr->srr_index; i <__ntasks ;i++){
+                        if(__tmap[i]==(unsigned)gtid){
+                            pr->srr_index=i+1;
+                            pr->u.p.lb = i;
+                            pr-> u.p.ub = i+1;
+                            break;
+                        }
+                    }
+                    break;
+                }
             case kmp_sch_static_balanced:
                 {
                     KD_TRACE(100, ("__kmp_dispatch_next: T#%d kmp_sch_static_balanced case\n", gtid) );

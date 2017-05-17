@@ -253,7 +253,7 @@ extern unsigned *__tmap;
  * @param ntasks Number of tasks.
  */
 extern void omp_set_workload(unsigned *tasks, unsigned ntasks);
-extern static unsigned *srr_balance(unsigned *tasks, unsigned ntasks, unsigned nthreads);
+extern unsigned *srr_balance(unsigned *tasks, unsigned ntasks, unsigned nthreads);
 /* End of SRR Schedule variables and functions */
 
 #ifdef __cplusplus
@@ -2804,6 +2804,7 @@ extern enum sched_type  __kmp_sched;    /* default runtime scheduling */
 extern enum sched_type  __kmp_static;   /* default static scheduling method */
 extern enum sched_type  __kmp_guided;   /* default guided scheduling method */
 extern enum sched_type  __kmp_auto;     /* default auto scheduling method */
+/*extern enum sched_type  __kmp_srr;     I don't know what i'm doing */
 extern int              __kmp_chunk;    /* default runtime chunk size */
 
 extern size_t     __kmp_stksize;        /* stack size per thread         */

@@ -40,7 +40,7 @@
         integer, parameter :: kmp_version_minor = 0
         integer, parameter :: kmp_version_build = 20160808
         character(*)          kmp_build_date
-        parameter( kmp_build_date = '2017-04-06 14:34:44 UTC' )
+        parameter( kmp_build_date = '2017-05-16 10:27:02 UTC' )
 
         integer, parameter :: omp_real_kind = 4
 

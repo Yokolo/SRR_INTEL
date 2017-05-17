@@ -3552,7 +3552,7 @@ __kmp_stg_parse_omp_schedule( char const * name, char const * value, void * data
                 __kmp_sched = kmp_sch_guided_chunked;
             else if (!__kmp_strcasecmp_with_sentinel("srr", value, ',')){      /* SRR */
                 KA_TRACE(10,("J'ai bien reconnu le schedule SRR\n"));
-                __kmp_sched=kmp_sch_srr;
+                __kmp_sched = kmp_sch_srr;
             }
 
 // AC: TODO: add AUTO schedule, and pprobably remove TRAPEZOIDAL (OMP 3.0 does not allow it)

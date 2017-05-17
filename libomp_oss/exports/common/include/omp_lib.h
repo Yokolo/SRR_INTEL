@@ -54,7 +54,7 @@
       integer (kind=omp_integer_kind), parameter :: kmp_version_minor = 0
       integer (kind=omp_integer_kind), parameter :: kmp_version_build = 20160808
       character(*)               kmp_build_date
-      parameter( kmp_build_date = '2017-04-06 14:34:44 UTC' )
+      parameter( kmp_build_date = '2017-05-16 10:27:02 UTC' )
 
       integer(kind=omp_sched_kind), parameter :: omp_sched_static  = 1
       integer(kind=omp_sched_kind), parameter :: omp_sched_dynamic = 2

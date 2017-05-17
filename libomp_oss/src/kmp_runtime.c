@@ -3607,6 +3607,8 @@ __kmp_register_root( int initial_thread )
     __kmp_acquire_bootstrap_lock( &__kmp_forkjoin_lock );
     KA_TRACE( 20, ("__kmp_register_root: entered\n"));
     KMP_MB();
+   
+
 
 
     /*
@@ -3793,8 +3795,25 @@ __kmp_register_root( int initial_thread )
 
     __kmp_root_counter ++;
 
-    KMP_MB();
+    KMP_MB(); 
+    KA_TRACE( 10, ("SRR th=  %p, nproc = %d  \n",root_thread,root_thread->th.th_team_nproc));
+     unsigned nproc = root_thread->th.th_team_nproc;
+     __ntasks=10;
+     __tasks=(unsigned *)malloc(__ntasks*sizeof(unsigned int));
+     unsigned int i =0;
+     for (i=0;i<__ntasks;i++){
+        __tasks[i]=i%4;
+        KA_TRACE(10,("Valeur de la case %d de la sortmap : %d \n",i,__tasks[i]));
+
+     }
+    __tmap = srr_balance(__tasks, __ntasks, nproc); 
+    for(i=0;i<__ntasks;i++)
+            {
+                KA_TRACE(10,("Valeur de la case %d de la taskmap : %d \n",i,__tmap[i]));
+            }
+
     __kmp_release_bootstrap_lock( &__kmp_forkjoin_lock );
+
 
     return gtid;
 }
