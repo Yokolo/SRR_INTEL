@@ -3796,7 +3796,7 @@ __kmp_register_root( int initial_thread )
     __kmp_root_counter ++;
 
     KMP_MB(); 
-    KA_TRACE( 10, ("SRR th=  %p, nproc = %d  \n",root_thread,root_thread->th.th_team_nproc));
+   /* KA_TRACE( 10, ("SRR th=  %p, nproc = %d  \n",root_thread,root_thread->th.th_team_nproc));
      unsigned nproc = root_thread->th.th_team_nproc;
      __ntasks=10;
      __tasks=(unsigned *)malloc(__ntasks*sizeof(unsigned int));
@@ -3810,7 +3810,7 @@ __kmp_register_root( int initial_thread )
     for(i=0;i<__ntasks;i++)
             {
                 KA_TRACE(10,("Valeur de la case %d de la taskmap : %d \n",i,__tmap[i]));
-            }
+            } */
 
     __kmp_release_bootstrap_lock( &__kmp_forkjoin_lock );
 
@@ -6667,7 +6667,22 @@ __kmp_do_middle_initialize( void )
 
             set__nproc( __kmp_threads[ i ], __kmp_dflt_team_nth );
         }
-    }
+        /* SRR */
+        KA_TRACE( 10, ("SRR th=  %p, nproc = %d  \n",__kmp_threads[0],__kmp_threads[0]->th.th_current_task->td_icvs.nproc));
+        unsigned nproc = __kmp_threads[0]->th.th_current_task->td_icvs.nproc;
+        __ntasks=10;
+        __tasks=(unsigned *)malloc(__ntasks*sizeof(unsigned int));
+        unsigned int i =0;
+        for (i=0;i<__ntasks;i++){
+          __tasks[i]=i%nproc;
+            KA_TRACE(10,("Valeur de la case %d de la sortmap : %d \n",i,__tasks[i]));
+         }
+         __tmap = srr_balance(__tasks, __ntasks, nproc); 
+        for(i=0;i<__ntasks;i++)
+            {
+                KA_TRACE(10,("Valeur de la case %d de la taskmap : %d \n",i,__tmap[i]));
+            }
+        }
     KA_TRACE( 20, ("__kmp_middle_initialize: final value for __kmp_dflt_team_nth = %d\n",
       __kmp_dflt_team_nth) );
 

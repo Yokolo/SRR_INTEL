@@ -324,12 +324,12 @@ unsigned *srr_balance(unsigned *tasks, unsigned ntasks, unsigned nthreads)
     
     /* Sort tasks. */
     for (i=0;i<ntasks;i++){
-            KD_TRACE(10,("Valeur de la case %d de la sortmap : %d \n",i,tasks[i]));
+            KD_TRACE(10,("Valeur de la case %d de la sortmap non triée : %d \n",i,tasks[i]));
 
      }
     sortmap = sort(tasks, ntasks);
     for (i=0;i<ntasks;i++){
-        KD_TRACE(10,("Valeur de la case %d de la sortmap : %d \n",i,sortmap[i]));
+        KD_TRACE(10,("Valeur de la case %d de la sortmap triée : %d \n",i,sortmap[i]));
 
      }
     
@@ -363,6 +363,9 @@ unsigned *srr_balance(unsigned *tasks, unsigned ntasks, unsigned nthreads)
     }
     
     free(sortmap);
+    for (i=0;i<ntasks;i++){
+        KD_TRACE(10,("Valeur de la case %d de la taskmap fin srr_balance : %d \n",i,taskmap[i]));
+     }
     
     return (taskmap);
 }

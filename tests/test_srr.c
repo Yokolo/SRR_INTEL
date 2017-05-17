@@ -13,7 +13,7 @@ unsigned nbtasks = N;
 //omp_set_workload(tasks,nbtasks);
 #pragma omp parallel for schedule(runtime)
 for ( i=0 ; i<N ; i++ ){
-	tab[i]=i + 1;
+	tab[i]=i + i;
 	}
 	
 	printf("Tout c'est bien passé HELLOWORLD ! \n");
