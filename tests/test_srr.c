@@ -1,16 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define N 10
+#include <omp.h>
+#define N 100000
 
 int main ( int argc, char **argv) {
 int tab[N];
+omp_sched_t *sched;
+int trunks;
 unsigned tasks[N];
 int i;
 for(i=0;i<N;i++){
 	tasks[i]=i%4;
 }
 unsigned nbtasks = N;
-//omp_set_workload(tasks,nbtasks);
+omp_set_workload(tasks,nbtasks);
+//printf("%d",omp_get_max_threads());
 #pragma omp parallel for schedule(runtime)
 for ( i=0 ; i<N ; i++ ){
 	tab[i]=i + i;

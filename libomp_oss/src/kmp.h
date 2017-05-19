@@ -252,7 +252,7 @@ extern unsigned *__tmap;
  * @param tasks  Load of iterations.
  * @param ntasks Number of tasks.
  */
-extern void omp_set_workload(unsigned *tasks, unsigned ntasks);
+//extern void omp_set_workload(unsigned *tasks, unsigned ntasks);
 extern unsigned *srr_balance(unsigned *tasks, unsigned ntasks, unsigned nthreads);
 /* End of SRR Schedule variables and functions */
 

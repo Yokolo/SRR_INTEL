@@ -599,6 +599,13 @@ xexpand(FTN_GET_SCHEDULE)( kmp_sched_t * kind, int * modifier )
         __kmp_get_schedule( __kmp_entry_gtid(), kind, modifier );
     #endif
 }
+void FTN_STDCALL
+xexpand(FTN_SET_WORKLOAD)(unsigned int * tasks,unsigned int ntasks )
+{
+    __tasks = tasks;
+    __ntasks = ntasks; 
+
+}
 
 void FTN_STDCALL
 xexpand(FTN_SET_MAX_ACTIVE_LEVELS)( int KMP_DEREF arg )
@@ -1383,6 +1390,8 @@ xaliasify(FTN_GET_WTIME, 20);
 // OMP_3.0 aliases
 xaliasify(FTN_SET_SCHEDULE,            30);
 xaliasify(FTN_GET_SCHEDULE,            30);
+xaliasify(FTN_SET_WORKLOAD,            30);
+
 xaliasify(FTN_GET_THREAD_LIMIT,        30);
 xaliasify(FTN_SET_MAX_ACTIVE_LEVELS,   30);
 xaliasify(FTN_GET_MAX_ACTIVE_LEVELS,   30);
@@ -1450,6 +1459,8 @@ xversionify(FTN_GET_WTIME,         20, "OMP_2.0");
 // OMP_3.0 versioned symbols
 xversionify(FTN_SET_SCHEDULE,      30, "OMP_3.0");
 xversionify(FTN_GET_SCHEDULE,      30, "OMP_3.0");
+xversionify(FTN_SET_WORKLOAD,      30, "OMP_3.0");
+
 xversionify(FTN_GET_THREAD_LIMIT,        30, "OMP_3.0");
 xversionify(FTN_SET_MAX_ACTIVE_LEVELS,   30, "OMP_3.0");
 xversionify(FTN_GET_MAX_ACTIVE_LEVELS,   30, "OMP_3.0");

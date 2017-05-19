@@ -61,7 +61,7 @@
         integer (kind=omp_integer_kind), parameter :: kmp_version_major = 5
         integer (kind=omp_integer_kind), parameter :: kmp_version_minor = 0
         integer (kind=omp_integer_kind), parameter :: kmp_version_build = 20160808
-        character(*), parameter :: kmp_build_date    = '2017-05-16 10:27:02 UTC'
+        character(*), parameter :: kmp_build_date    = '2017-05-18 12:33:58 UTC'
         integer (kind=omp_integer_kind), parameter :: openmp_version    = 200505
 
         integer(kind=omp_sched_kind), parameter :: omp_sched_static  = 1
@@ -193,6 +193,12 @@
             integer (kind=omp_sched_kind) kind
             integer (kind=omp_integer_kind) modifier
           end subroutine omp_get_schedule
+
+          subroutine omp_set_workload(kind, modifier)
+            use omp_lib_kinds
+            integer (kind=kmp_pointer_kind) value::kind
+            integer (kind=omp_integer_kind) value::modifier
+          end subroutine omp_set_workload
 
           function omp_get_proc_bind()
             use omp_lib_kinds
@@ -556,6 +562,8 @@
 !dec$ attributes alias:'OMP_GET_TEAM_SIZE' :: omp_get_team_size
 !dec$ attributes alias:'OMP_SET_SCHEDULE' :: omp_set_schedule
 !dec$ attributes alias:'OMP_GET_SCHEDULE' :: omp_get_schedule
+!dec$ attributes alias:'OMP_SET_WORKLOAD' :: omp_set_workload
+
 !dec$ attributes alias:'OMP_GET_PROC_BIND' :: omp_get_proc_bind
 !dec$ attributes alias:'OMP_GET_WTIME' :: omp_get_wtime
 !dec$ attributes alias:'OMP_GET_WTICK' :: omp_get_wtick
@@ -636,6 +644,8 @@
 !dec$ attributes alias:'_OMP_GET_TEAM_SIZE' :: omp_get_team_size
 !dec$ attributes alias:'_OMP_SET_SCHEDULE' :: omp_set_schedule
 !dec$ attributes alias:'_OMP_GET_SCHEDULE' :: omp_get_schedule
+!dec$ attributes alias:'_OMP_SET_WORKLOAD' :: omp_set_workload
+
 !dec$ attributes alias:'_OMP_GET_PROC_BIND' :: omp_get_proc_bind
 !dec$ attributes alias:'_OMP_GET_WTIME' :: omp_get_wtime
 !dec$ attributes alias:'_OMP_GET_WTICK' :: omp_get_wtick
@@ -719,6 +729,8 @@
 !dec$ attributes alias:'omp_get_team_size_'::omp_get_team_size
 !dec$ attributes alias:'omp_set_schedule_'::omp_set_schedule
 !dec$ attributes alias:'omp_get_schedule_'::omp_get_schedule
+!dec$ attributes alias:'omp_set_workload_'::omp_set_workload
+
 !dec$ attributes alias:'omp_get_proc_bind_' :: omp_get_proc_bind
 !dec$ attributes alias:'omp_get_wtime_'::omp_get_wtime
 !dec$ attributes alias:'omp_get_wtick_'::omp_get_wtick
@@ -801,6 +813,8 @@
 !dec$ attributes alias:'_omp_get_team_size_'::omp_get_team_size
 !dec$ attributes alias:'_omp_set_schedule_'::omp_set_schedule
 !dec$ attributes alias:'_omp_get_schedule_'::omp_get_schedule
+!dec$ attributes alias:'_omp_set_workload_'::omp_set_workload
+
 !dec$ attributes alias:'_omp_get_proc_bind_' :: omp_get_proc_bind
 !dec$ attributes alias:'_omp_get_wtime_'::omp_get_wtime
 !dec$ attributes alias:'_omp_get_wtick_'::omp_get_wtick

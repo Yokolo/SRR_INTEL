@@ -85,6 +85,9 @@
     #define FTN_GET_THREAD_LIMIT                 omp_get_thread_limit
     #define FTN_SET_SCHEDULE                     omp_set_schedule
     #define FTN_GET_SCHEDULE                     omp_get_schedule
+    #define FTN_SET_WORKLOAD                     omp_set_workload
+
+
     #define FTN_SET_MAX_ACTIVE_LEVELS            omp_set_max_active_levels
     #define FTN_GET_MAX_ACTIVE_LEVELS            omp_get_max_active_levels
     #define FTN_GET_ACTIVE_LEVEL                 omp_get_active_level
@@ -203,6 +206,8 @@
     #define FTN_GET_THREAD_LIMIT                 omp_get_thread_limit_
     #define FTN_SET_SCHEDULE                     omp_set_schedule_
     #define FTN_GET_SCHEDULE                     omp_get_schedule_
+    #define FTN_SET_WORKLOAD                     omp_set_workload_
+
     #define FTN_SET_MAX_ACTIVE_LEVELS            omp_set_max_active_levels_
     #define FTN_GET_MAX_ACTIVE_LEVELS            omp_get_max_active_levels_
     #define FTN_GET_ACTIVE_LEVEL                 omp_get_active_level_
@@ -322,6 +327,8 @@
     #define FTN_GET_THREAD_LIMIT                 OMP_GET_THREAD_LIMIT
     #define FTN_SET_SCHEDULE                     OMP_SET_SCHEDULE
     #define FTN_GET_SCHEDULE                     OMP_GET_SCHEDULE
+    #define FTN_SET_WORKLOAD                     OMP_SET_WORKLOAD
+
     #define FTN_SET_MAX_ACTIVE_LEVELS            OMP_SET_MAX_ACTIVE_LEVELS
     #define FTN_GET_MAX_ACTIVE_LEVELS            OMP_GET_MAX_ACTIVE_LEVELS
     #define FTN_GET_ACTIVE_LEVEL                 OMP_GET_ACTIVE_LEVEL
@@ -441,6 +448,8 @@
     #define FTN_GET_THREAD_LIMIT                 OMP_GET_THREAD_LIMIT_
     #define FTN_SET_SCHEDULE                     OMP_SET_SCHEDULE_
     #define FTN_GET_SCHEDULE                     OMP_GET_SCHEDULE_
+    #define FTN_SET_WORKLOAD                     OMP_SET_WORKLOAD_
+
     #define FTN_SET_MAX_ACTIVE_LEVELS            OMP_SET_MAX_ACTIVE_LEVELS_
     #define FTN_GET_MAX_ACTIVE_LEVELS            OMP_GET_MAX_ACTIVE_LEVELS_
     #define FTN_GET_ACTIVE_LEVEL                 OMP_GET_ACTIVE_LEVEL_

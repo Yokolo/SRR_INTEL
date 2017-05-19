@@ -6670,11 +6670,10 @@ __kmp_do_middle_initialize( void )
         /* SRR */
         KA_TRACE( 10, ("SRR th=  %p, nproc = %d  \n",__kmp_threads[0],__kmp_threads[0]->th.th_current_task->td_icvs.nproc));
         unsigned nproc = __kmp_threads[0]->th.th_current_task->td_icvs.nproc;
-        __ntasks=10;
-        __tasks=(unsigned *)malloc(__ntasks*sizeof(unsigned int));
+        /*__ntasks=10;
+        __tasks=(unsigned *)malloc(__ntasks*sizeof(unsigned int)); */
         unsigned int i =0;
         for (i=0;i<__ntasks;i++){
-          __tasks[i]=i%nproc;
             KA_TRACE(10,("Valeur de la case %d de la sortmap : %d \n",i,__tasks[i]));
          }
          __tmap = srr_balance(__tasks, __ntasks, nproc); 

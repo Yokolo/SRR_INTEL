@@ -38,7 +38,7 @@
 #   define KMP_VERSION_MAJOR    5
 #   define KMP_VERSION_MINOR    0
 #   define KMP_VERSION_BUILD    20160808
-#   define KMP_BUILD_DATE       "2017-05-16 12:28:14 UTC"
+#   define KMP_BUILD_DATE       "2017-05-18 14:50:47 UTC"
 
 #   ifdef __cplusplus
     extern "C" {
@@ -81,6 +81,9 @@
     extern int    __KAI_KMPC_CONVENTION  omp_get_thread_limit        (void);
     extern int    __KAI_KMPC_CONVENTION  omp_get_max_active_levels   (void);
     extern void   __KAI_KMPC_CONVENTION  omp_get_schedule            (omp_sched_t *, int *);
+    extern void   __KAI_KMPC_CONVENTION  omp_set_workload            (int *, int);
+
+
     extern int    __KAI_KMPC_CONVENTION  omp_get_max_task_priority   (void);
 
     /* lock API functions */

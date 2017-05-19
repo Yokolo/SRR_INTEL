@@ -202,12 +202,11 @@ unsigned *__tmap;
  * @param tasks  Load of iterations.
  * @param ntasks Number of tasks.
  */
-void omp_set_workload(unsigned *tasks, unsigned ntasks)
-{
+/*{
     __tasks = tasks;
     __ntasks = ntasks;
 }
-
+*/
 /*============================================================================*
  * Workload Sorting                                                           *
  *============================================================================*/
@@ -1190,14 +1189,25 @@ __kmp_dispatch_init(
             }
         }*/
         unsigned int i =0;
+        int booleen = 0;
+        pr-> u.p.tc = 0;
         for(i=0;i<__ntasks;i++){
-            if (__tmap[i]==(unsigned)gtid){
-                pr->srr_index=i+1;
+            if (__tmap[i]==(unsigned)gtid && !booleen){
+                pr->srr_index=i;
                 pr-> u.p.lb = i;
+                lb= i;
+                ub = i+1;
                 pr-> u.p.ub = i+1;
-                break;
+                pr -> u.p.tc ++;
+                booleen = 1;
+            }
+            else if(__tmap[i]==(unsigned)gtid && booleen){
+                pr -> u.p.tc ++;
             }
         }
+        //pr -> u.p.tc --;
+
+
         if (gtid == masterid){
             KD_TRACE(100,("Je suis le thread master T#%d dans srr\n",gtid));
         }
@@ -2085,12 +2095,30 @@ __kmp_dispatch_next(
             case kmp_sch_srr:
                 {
                     unsigned int i ;
-                    for(i= pr->srr_index; i <__ntasks ;i++){
-                        if(__tmap[i]==(unsigned)gtid){
-                            pr->srr_index=i+1;
-                            pr->u.p.lb = i;
-                            pr-> u.p.ub = i+1;
-                            break;
+                    if(pr->u.p.tc==0){
+                        status =0;
+                        pr->u.p.lb = 0;
+                        pr-> u.p.ub = 0;
+                        *p_lb = 0;
+                        *p_ub = 0;
+                    }
+                    else{
+                         KD_TRACE(10,("TRIP COUNT =  %d",pr->u.p.tc));
+                         KD_TRACE(10,("SRR INDEX =  %d",pr->srr_index));
+
+
+                        for(i= pr->srr_index; i <__ntasks ;i++){
+                            if(__tmap[i]==(unsigned)gtid){
+                                incr = 1;
+                                pr->srr_index=i+1;
+                                pr->u.p.lb = i;
+                                pr-> u.p.ub = i+1;
+                                *p_lb = i;
+                                *p_ub = i+1;
+                                pr->u.p.tc --;
+                                status=1;
+                                break;
+                            }
                         }
                     }
                     break;

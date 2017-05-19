@@ -54,7 +54,7 @@
       integer (kind=omp_integer_kind), parameter :: kmp_version_minor = 0
       integer (kind=omp_integer_kind), parameter :: kmp_version_build = 20160808
       character(*)               kmp_build_date
-      parameter( kmp_build_date = '2017-05-16 12:28:14 UTC' )
+      parameter( kmp_build_date = '2017-05-18 14:50:47 UTC' )
 
       integer(kind=omp_sched_kind), parameter :: omp_sched_static  = 1
       integer(kind=omp_sched_kind), parameter :: omp_sched_dynamic = 2
@@ -185,6 +185,12 @@
           integer (kind=omp_sched_kind) kind
           integer (kind=omp_integer_kind) chunk_size
         end subroutine omp_get_schedule
+
+         subroutine omp_set_workload(kind, modifier)
+            import
+            integer (kind=kmp_pointer_kind) value::kind
+            integer (kind=omp_integer_kind) value::modifier
+          end subroutine omp_set_workload
 
         function omp_get_proc_bind() bind(c)
           import
@@ -536,6 +542,8 @@
 !DIR$ ATTRIBUTES OFFLOAD:MIC :: omp_get_team_size
 !DIR$ ATTRIBUTES OFFLOAD:MIC :: omp_set_schedule
 !DIR$ ATTRIBUTES OFFLOAD:MIC :: omp_get_schedule
+!DIR$ ATTRIBUTES OFFLOAD:MIC :: omp_set_workload
+
 !DIR$ ATTRIBUTES OFFLOAD:MIC :: omp_get_proc_bind
 !DIR$ ATTRIBUTES OFFLOAD:MIC :: omp_get_wtime
 !DIR$ ATTRIBUTES OFFLOAD:MIC :: omp_get_wtick
@@ -608,6 +616,8 @@
 !$omp declare target(omp_get_team_size )
 !$omp declare target(omp_set_schedule )
 !$omp declare target(omp_get_schedule )
+!$omp declare target(omp_set_workload )
+
 !$omp declare target(omp_get_proc_bind )
 !$omp declare target(omp_get_wtime )
 !$omp declare target(omp_get_wtick )

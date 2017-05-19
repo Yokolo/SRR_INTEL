@@ -483,6 +483,7 @@ kmp_set_warnings_off                        780
     ompc_set_schedule                       799
     ompc_get_ancestor_thread_num            800
     ompc_get_team_size                      801
+    omp_set_workload                        802
     kmp_set_affinity                        850
     kmp_get_affinity                        851
     kmp_get_affinity_max_proc               852

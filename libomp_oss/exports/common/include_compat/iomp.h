@@ -38,7 +38,7 @@
 #   define KMP_VERSION_MAJOR    5
 #   define KMP_VERSION_MINOR    0
 #   define KMP_VERSION_BUILD    20160808
-#   define KMP_BUILD_DATE       "2017-05-16 10:27:02 UTC"
+#   define KMP_BUILD_DATE       "2017-05-18 12:33:58 UTC"
 
 #   ifdef __cplusplus
         extern "C" {

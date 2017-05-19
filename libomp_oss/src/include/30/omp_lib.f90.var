@@ -173,6 +173,12 @@
             integer (kind=omp_integer_kind) :: modifier
           end subroutine omp_get_schedule
 
+           subroutine omp_set_workload(kind, modifier)
+            use omp_lib_kinds
+            integer (kind=kmp_pointer_kind) value::kind
+            integer (kind=omp_integer_kind) value::modifier
+          end subroutine omp_set_workload
+
           function omp_get_wtime() bind(c)
             use omp_lib_kinds
             real (kind=kmp_double_kind) omp_get_wtime
