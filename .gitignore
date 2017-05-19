@@ -1,0 +1,4 @@
+*.o
+libomp_oss/tmp
+tests/*.o
+tests/test_srr
