@@ -153,7 +153,7 @@ struct i_maxmin< unsigned long long > {
 
         UT count;         // unsigned
 
-        UT next_iter_srr; //unsigned, it's the place in the taskmap
+        //UT next_iter_srr; //unsigned, it's the place in the taskmap
         UT ordered_lower; // unsigned
         UT ordered_upper; // unsigned
         #if KMP_OS_WINDOWS

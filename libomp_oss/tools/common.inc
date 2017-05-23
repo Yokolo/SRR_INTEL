@@ -92,7 +92,7 @@ else
     ifeq "$(omp_os)" "windows"
         compiler?=icl
     else
-        compiler?=clang
+        compiler?=gcc
     endif
 endif
 
