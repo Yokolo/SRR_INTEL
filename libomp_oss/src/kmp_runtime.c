@@ -6668,9 +6668,15 @@ __kmp_do_middle_initialize( void )
             set__nproc( __kmp_threads[ i ], __kmp_dflt_team_nth );
         }
         /* SRR */
+        __kmp_printf("test\n");      
+
         KA_TRACE( 10, ("SRR th=  %p, nproc = %d  \n",__kmp_threads[0],__kmp_threads[0]->th.th_current_task->td_icvs.nproc));
         unsigned nproc = __kmp_threads[0]->th.th_current_task->td_icvs.nproc;
-        /*__ntasks=10;
+        nproc = __kmp_get_team_num_threads(0);
+        KA_TRACE(10,("NPROC = %d",nproc));
+        __kmp_printf("test\n");      
+         /*__ntasks=10;
+
         __tasks=(unsigned *)malloc(__ntasks*sizeof(unsigned int)); */
         unsigned int i =0;
         for (i=0;i<__ntasks;i++){

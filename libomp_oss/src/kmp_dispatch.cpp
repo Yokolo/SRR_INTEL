@@ -2101,6 +2101,10 @@ __kmp_dispatch_next(
                         pr-> u.p.ub = 0;
                         *p_lb = 0;
                         *p_ub = 0;
+                        if ( p_st != NULL ) {
+                            *p_st = 0;
+                        }
+ 
                     }
                     else{
                          KD_TRACE(10,("TRIP COUNT =  %d",pr->u.p.tc));
@@ -2117,6 +2121,9 @@ __kmp_dispatch_next(
                                 *p_ub = i+1;
                                 pr->u.p.tc --;
                                 status=1;
+                                 if ( p_st != NULL ) {
+                                     *p_st = 1;
+                                }
                                 break;
                             }
                         }

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <omp.h>
-#define N 100000
+#define N 100
 
 int main ( int argc, char **argv) {
 int tab[N];
@@ -10,7 +10,7 @@ int trunks;
 unsigned tasks[N];
 int i;
 for(i=0;i<N;i++){
-	tasks[i]=i%4;
+	tasks[i]=i;
 }
 unsigned nbtasks = N;
 omp_set_workload(tasks,nbtasks);
