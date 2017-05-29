@@ -6667,27 +6667,26 @@ __kmp_do_middle_initialize( void )
 
             set__nproc( __kmp_threads[ i ], __kmp_dflt_team_nth );
         }
-        /* SRR */
-        __kmp_printf("test\n");      
+    }
+      /* SRR */
+    	if(__kmp_sched==kmp_sch_srr){
 
-        KA_TRACE( 10, ("SRR th=  %p, nproc = %d  \n",__kmp_threads[0],__kmp_threads[0]->th.th_current_task->td_icvs.nproc));
-        unsigned nproc = __kmp_threads[0]->th.th_current_task->td_icvs.nproc;
-        nproc = __kmp_get_team_num_threads(0);
-        KA_TRACE(10,("NPROC = %d",nproc));
-        __kmp_printf("test\n");      
-         /*__ntasks=10;
 
-        __tasks=(unsigned *)malloc(__ntasks*sizeof(unsigned int)); */
-        unsigned int i =0;
-        for (i=0;i<__ntasks;i++){
-            KA_TRACE(10,("Valeur de la case %d de la sortmap : %d \n",i,__tasks[i]));
-         }
-         __tmap = srr_balance(__tasks, __ntasks, nproc); 
-        for(i=0;i<__ntasks;i++)
-            {
-                KA_TRACE(10,("Valeur de la case %d de la taskmap : %d \n",i,__tmap[i]));
-            }
+	        KA_TRACE(20, ("SRR th=  %p, nproc = %d  \n",__kmp_threads[0],__kmp_threads[0]->th.th_current_task->td_icvs.nproc));
+	        unsigned nproc = __kmp_threads[0]->th.th_current_task->td_icvs.nproc;
+	        KA_TRACE(10,("NPROC = %d\n",nproc));
+
+	        unsigned int k =0;
+	        for (k=0;k<__ntasks;k++){
+	            KA_TRACE(20,("Valeur de la case %d de la sortmap : %d \n",k,__tasks[k]));
+	         }
+	         __tmap = srr_balance(__tasks, __ntasks, nproc); 
+	        for(k=0;k<__ntasks;k++)
+	            {
+	                KA_TRACE(20,("Valeur de la case %d de la taskmap : %d \n",k,__tmap[k]));
+	            }
         }
+
     KA_TRACE( 20, ("__kmp_middle_initialize: final value for __kmp_dflt_team_nth = %d\n",
       __kmp_dflt_team_nth) );
 

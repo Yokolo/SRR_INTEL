@@ -153,7 +153,6 @@ struct i_maxmin< unsigned long long > {
 
         UT count;         // unsigned
 
-        //UT next_iter_srr; //unsigned, it's the place in the taskmap
         UT ordered_lower; // unsigned
         UT ordered_upper; // unsigned
         #if KMP_OS_WINDOWS
@@ -323,12 +322,12 @@ unsigned *srr_balance(unsigned *tasks, unsigned ntasks, unsigned nthreads)
     
     /* Sort tasks. */
     for (i=0;i<ntasks;i++){
-            KD_TRACE(10,("Valeur de la case %d de la sortmap non triée : %d \n",i,tasks[i]));
+        KD_TRACE(1000,("Valeur de la case %d de la sortmap non triée : %d \n",i,tasks[i]));
 
      }
     sortmap = sort(tasks, ntasks);
     for (i=0;i<ntasks;i++){
-        KD_TRACE(10,("Valeur de la case %d de la sortmap triée : %d \n",i,sortmap[i]));
+        KD_TRACE(1000,("Valeur de la case %d de la sortmap triée : %d \n",i,sortmap[i]));
 
      }
     
@@ -363,7 +362,7 @@ unsigned *srr_balance(unsigned *tasks, unsigned ntasks, unsigned nthreads)
     
     free(sortmap);
     for (i=0;i<ntasks;i++){
-        KD_TRACE(10,("Valeur de la case %d de la taskmap fin srr_balance : %d \n",i,taskmap[i]));
+        KD_TRACE(1000,("Valeur de la case %d de la taskmap fin srr_balance : %d \n",i,taskmap[i]));
      }
     
     return (taskmap);
@@ -1171,7 +1170,7 @@ __kmp_dispatch_init(
         } // case
     case kmp_sch_srr :
     {
-        //unsigned nproc = th->th.th_team_nproc; // nproc = number of thread in team
+        unsigned nproc = th->th.th_team_nproc; // nproc = number of thread in team
         int masterid = team->t.t_master_tid; // get the masterID 
         /*
         KD_TRACE(100,("Je suis le thread T#%d dans srr\n",gtid));
@@ -1188,29 +1187,38 @@ __kmp_dispatch_init(
                 KD_TRACE(100,("Valeur de la case %d de la taskmap : %d \n",i,__tmap[i]));
             }
         }*/
-        unsigned int i =0;
-        int booleen = 0;
-        pr-> u.p.tc = 0;
-        for(i=0;i<__ntasks;i++){
-            if (__tmap[i]==(unsigned)gtid && !booleen){
-                pr->srr_index=i;
-                pr-> u.p.lb = i;
-                lb= i;
-                ub = i+1;
-                pr-> u.p.ub = i+1;
-                pr -> u.p.tc ++;
-                booleen = 1;
-            }
-            else if(__tmap[i]==(unsigned)gtid && booleen){
-                pr -> u.p.tc ++;
+        if(nproc ==1){
+            lb=lb;
+            ub=ub;
+            pr -> u.p.lb = lb;
+            pr -> u.p.ub = ub;
+            pr -> u.p.tc = lb + ub +1;
+        }
+        else{
+            unsigned int i =0;
+            int booleen = 0;
+            pr-> u.p.tc = 0;
+            for(i=0;i<__ntasks;i++){
+                if (__tmap[i]==(unsigned)gtid && !booleen){
+                    pr->srr_index=i;
+                    lb= i;
+                    ub = i+1;
+                    pr -> u.p.lb = i;
+                    pr -> u.p.ub = i+1;
+                    pr -> u.p.tc ++;
+                    booleen = 1;
+                }
+                else if(__tmap[i]==(unsigned)gtid && booleen){
+                    pr -> u.p.tc ++;
+                }
             }
         }
         //pr -> u.p.tc --;
 
 
-        if (gtid == masterid){
-            KD_TRACE(100,("Je suis le thread master T#%d dans srr\n",gtid));
-        }
+            KD_TRACE(100,("Je suis le thread T#%d dans srr_NEXT, LB = %d UB = %d TC = %d srr_index = %d \n",gtid,pr-> u.p.lb,pr-> u.p.ub,pr-> u.p.tc,pr->srr_index));
+            //KD_TRACE(100,("LB = %d UB = %d \n",lb,ub));
+        
         break;
     } // endcase
 
@@ -2094,6 +2102,10 @@ __kmp_dispatch_next(
             #endif // ( KMP_STATIC_STEAL_ENABLED )
             case kmp_sch_srr:
                 {
+                    KD_TRACE(100,("__kmp_dispatch_next: T#%d case SRR lb = %d ub = %d \n ",gtid,*p_lb,*p_ub));
+                    if(pr == NULL){
+                        KD_TRACE(100,("J'ai trouvé !\n"))
+                    }
                     unsigned int i ;
                     if(pr->u.p.tc==0){
                         status =0;
@@ -2107,8 +2119,8 @@ __kmp_dispatch_next(
  
                     }
                     else{
-                         KD_TRACE(10,("TRIP COUNT =  %d",pr->u.p.tc));
-                         KD_TRACE(10,("SRR INDEX =  %d",pr->srr_index));
+                         KD_TRACE(100,("TRIP COUNT =  %d\n",pr->u.p.tc));
+                         KD_TRACE(100,("SRR INDEX =  %d\n",pr->srr_index));
 
 
                         for(i= pr->srr_index; i <__ntasks ;i++){

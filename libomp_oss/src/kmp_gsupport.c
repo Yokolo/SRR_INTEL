@@ -661,12 +661,13 @@ xexpand(KMP_API_NAME_GOMP_PARALLEL_END)(void)
         long chunk_sz = 0;                                                   \
         int gtid = __kmp_entry_gtid();                                       \
         MKLOC(loc, #func);                                                   \
-        KA_TRACE(20, ( #func ": T#%d, lb 0x%lx, ub 0x%lx, str 0x%lx, chunk_sz %d\n",  \
-          gtid, lb, ub, str, chunk_sz ));                                    \
+        KA_TRACE(20, ( #func ": T#%d, lb 0x%lx, ub 0x%lx, str 0x%lx, chunk_sz %d p_lb=%d p_ub= %d\n",  \
+          gtid, lb, ub, str, chunk_sz,*p_lb,*p_ub ));                                    \
                                                                              \
         if ((str > 0) ? (lb < ub) : (lb > ub)) {                             \
             KMP_DISPATCH_INIT(&loc, gtid, (schedule), lb,                    \
               (str > 0) ? (ub - 1) : (ub + 1), str, chunk_sz, TRUE);         \
+            KA_TRACE(20,("p_lb = %d\n ",*p_lb));                              \
             status = KMP_DISPATCH_NEXT(&loc, gtid, NULL, (kmp_int *)p_lb,    \
               (kmp_int *)p_ub, (kmp_int *)&stride);                          \
             if (status) {                                                    \

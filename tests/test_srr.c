@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <omp.h>
-#define N 100
+#define N 100000
 
 int main ( int argc, char **argv) {
 int tab[N];
@@ -17,10 +17,9 @@ omp_set_workload(tasks,nbtasks);
 //printf("%d",omp_get_max_threads());
 #pragma omp parallel for schedule(runtime)
 for ( i=0 ; i<N ; i++ ){
-	tab[i]=i + i;
+	tab[i]=(i+i/2)*4+10;
 	}
 	
-	printf("Tout c'est bien passé HELLOWORLD ! \n");
 	for(i=0;i<N;i++){
 		printf("%d ",tab[i]);
 	}
