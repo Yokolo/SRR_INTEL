@@ -322,12 +322,12 @@ unsigned *srr_balance(unsigned *tasks, unsigned ntasks, unsigned nthreads)
     
     /* Sort tasks. */
     for (i=0;i<ntasks;i++){
-        KD_TRACE(1000,("Valeur de la case %d de la sortmap non triée : %d \n",i,tasks[i]));
+        //KD_TRACE(1000,("Valeur de la case %d de la sortmap non triée : %d \n",i,tasks[i]));
 
      }
     sortmap = sort(tasks, ntasks);
     for (i=0;i<ntasks;i++){
-        KD_TRACE(1000,("Valeur de la case %d de la sortmap triée : %d \n",i,sortmap[i]));
+        //KD_TRACE(1000,("Valeur de la case %d de la sortmap triée : %d \n",i,sortmap[i]));
 
      }
     
@@ -362,7 +362,7 @@ unsigned *srr_balance(unsigned *tasks, unsigned ntasks, unsigned nthreads)
     
     free(sortmap);
     for (i=0;i<ntasks;i++){
-        KD_TRACE(1000,("Valeur de la case %d de la taskmap fin srr_balance : %d \n",i,taskmap[i]));
+       // KD_TRACE(1000,("Valeur de la case %d de la taskmap fin srr_balance : %d \n",i,taskmap[i]));
      }
     
     return (taskmap);
@@ -1216,7 +1216,7 @@ __kmp_dispatch_init(
         //pr -> u.p.tc --;
 
 
-            KD_TRACE(100,("Je suis le thread T#%d dans srr_NEXT, LB = %d UB = %d TC = %d srr_index = %d \n",gtid,pr-> u.p.lb,pr-> u.p.ub,pr-> u.p.tc,pr->srr_index));
+            //KD_TRACE(100,("Je suis le thread T#%d dans srr_NEXT, LB = %d UB = %d TC = %d srr_index = %d \n",gtid,pr-> u.p.lb,pr-> u.p.ub,pr-> u.p.tc,pr->srr_index));
             //KD_TRACE(100,("LB = %d UB = %d \n",lb,ub));
         
         break;
@@ -1832,11 +1832,14 @@ __kmp_dispatch_next(
         {
             const char * buff;
             // create format specifiers before the debug output
-            buff = __kmp_str_format(
+           /* buff = __kmp_str_format(
                 "__kmp_dispatch_next: T#%%d serialized case: p_lb:%%%s " \
                 "p_ub:%%%s p_st:%%%s p_last:%%p %%d  returning:%%d\n",
                 traits_t< T >::spec, traits_t< T >::spec, traits_t< ST >::spec );
-            KD_TRACE(10, ( buff, gtid, *p_lb, *p_ub, *p_st, p_last, *p_last, status) );
+            KD_TRACE(10, ( buff, gtid, *p_lb, *p_ub, *p_st, p_last, *p_last, status) );*/
+            //KD_TRACE(10,("MON PRINT gtid = %d , *p_lb = %p , * p_ub = %p , *p_st = %p ,p_last = %d , *p_last = %p, status = %p\n ",gtid,*p_lb,*p_ub,*p_st,p_last,*p_last,status));
+
+            KD_TRACE(10,("MON PRINT gtid = %d , *p_lb = %p , * p_ub = %p , *p_st = %p ,p_last = %d schedule = %d ,\n ",gtid,*p_lb,*p_ub,*p_st,p_last,pr->schedule));
             __kmp_str_free( &buff );
         }
         #endif
@@ -1863,10 +1866,15 @@ __kmp_dispatch_next(
         KMP_DEBUG_ASSERT( sh );
 
         if ( pr->u.p.tc == 0 ) {
+            KD_TRACE(10,("MON PRINT  dans tc = 0 schedule = %d ,\n ",pr->schedule));
+
             // zero trip count
             status = 0;
         } else {
+            KD_TRACE(10,("MON PRINT schedule = %d ,\n ",pr->schedule));
+
             switch (pr->schedule) {
+
             #if ( KMP_STATIC_STEAL_ENABLED )
             case kmp_sch_static_steal:
                 {
@@ -2104,7 +2112,6 @@ __kmp_dispatch_next(
                 {
                     KD_TRACE(100,("__kmp_dispatch_next: T#%d case SRR lb = %d ub = %d \n ",gtid,*p_lb,*p_ub));
                     if(pr == NULL){
-                        KD_TRACE(100,("J'ai trouvé !\n"))
                     }
                     unsigned int i ;
                     if(pr->u.p.tc==0){

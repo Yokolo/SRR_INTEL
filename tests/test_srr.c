@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <omp.h>
-#define N 100000
+#define N 10
 
 int main ( int argc, char **argv) {
 int tab[N];
