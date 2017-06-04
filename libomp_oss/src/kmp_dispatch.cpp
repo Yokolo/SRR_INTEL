@@ -322,7 +322,7 @@ unsigned *srr_balance(unsigned *tasks, unsigned ntasks, unsigned nthreads)
     
     /* Sort tasks. */
     for (i=0;i<ntasks;i++){
-        //KD_TRACE(1000,("Valeur de la case %d de la sortmap non triée : %d \n",i,tasks[i]));
+        KD_TRACE(1000,("Valeur de la case %d de la sortmap non triée : %d \n",i,tasks[i]));
 
      }
     sortmap = sort(tasks, ntasks);
@@ -362,7 +362,7 @@ unsigned *srr_balance(unsigned *tasks, unsigned ntasks, unsigned nthreads)
     
     free(sortmap);
     for (i=0;i<ntasks;i++){
-       // KD_TRACE(1000,("Valeur de la case %d de la taskmap fin srr_balance : %d \n",i,taskmap[i]));
+        KD_TRACE(1000,("Valeur de la case %d de la taskmap fin srr_balance : %d \n",i,taskmap[i]));
      }
     
     return (taskmap);
@@ -1188,8 +1188,8 @@ __kmp_dispatch_init(
             }
         }*/
         if(nproc ==1){
-            lb=lb;
-            ub=ub;
+            //lb=lb;
+            //ub=ub;
             pr -> u.p.lb = lb;
             pr -> u.p.ub = ub;
             pr -> u.p.tc = lb + ub +1;
@@ -1203,9 +1203,10 @@ __kmp_dispatch_init(
                     pr->srr_index=i;
                     lb= i;
                     ub = i+1;
-                    pr -> u.p.lb = i;
-                    pr -> u.p.ub = i+1;
+                    pr -> u.p.lb = 0;
+                    pr -> u.p.ub = __ntasks-1;
                     pr -> u.p.tc ++;
+                    pr -> u.p.st = 1;
                     booleen = 1;
                 }
                 else if(__tmap[i]==(unsigned)gtid && booleen){
@@ -1213,10 +1214,12 @@ __kmp_dispatch_init(
                 }
             }
         }
+        tc=pr->u.p.tc;
+        st=pr->u.p.st;
         //pr -> u.p.tc --;
 
 
-            //KD_TRACE(100,("Je suis le thread T#%d dans srr_NEXT, LB = %d UB = %d TC = %d srr_index = %d \n",gtid,pr-> u.p.lb,pr-> u.p.ub,pr-> u.p.tc,pr->srr_index));
+            KD_TRACE(100,("Je suis le thread T#%d dans srr_INIT, LB = %d UB = %d TC = %d srr_index = %d \n",gtid,pr-> u.p.lb,pr-> u.p.ub,pr-> u.p.tc,pr->srr_index));
             //KD_TRACE(100,("LB = %d UB = %d \n",lb,ub));
         
         break;
@@ -1871,7 +1874,7 @@ __kmp_dispatch_next(
             // zero trip count
             status = 0;
         } else {
-            KD_TRACE(10,("MON PRINT schedule = %d ,\n ",pr->schedule));
+            //KD_TRACE(10,("MON PRINT schedule = %d ,\n ",pr->schedule));
 
             switch (pr->schedule) {
 
@@ -2126,8 +2129,8 @@ __kmp_dispatch_next(
  
                     }
                     else{
-                         KD_TRACE(100,("TRIP COUNT =  %d\n",pr->u.p.tc));
-                         KD_TRACE(100,("SRR INDEX =  %d\n",pr->srr_index));
+                         KD_TRACE(100,("TRHEAD #%d TRIP COUNT =  %d\n",gtid,pr->u.p.tc));
+                         KD_TRACE(100,("TRHEAD #%d SRR INDEX =  %d\n",gtid,pr->srr_index));
 
 
                         for(i= pr->srr_index; i <__ntasks ;i++){
@@ -2136,8 +2139,11 @@ __kmp_dispatch_next(
                                 pr->srr_index=i+1;
                                 pr->u.p.lb = i;
                                 pr-> u.p.ub = i+1;
+                                //pr -> u.p.st = 1;
+
+
                                 *p_lb = i;
-                                *p_ub = i+1;
+                                *p_ub = i;
                                 pr->u.p.tc --;
                                 status=1;
                                  if ( p_st != NULL ) {
