@@ -1,6 +1,6 @@
-#H1 This repository contains an implementation of Schedule Round Robin loop scheduling strategy (SRR) in the Intel Runtime library.
+# H1 This repository contains an implementation of Schedule Round Robin loop scheduling strategy (SRR) in the Intel Runtime library.
 
-#H2 How to compile it ?
+# H2 How to compile it ?
 
 Enter the directory libomp_oss
 make
