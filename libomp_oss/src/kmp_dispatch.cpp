@@ -1808,7 +1808,7 @@ __kmp_dispatch_next(
             KD_TRACE(10, ( buff, gtid, *p_lb, *p_ub, *p_st, p_last, *p_last, status) );*/
             //KD_TRACE(10,("MON PRINT gtid = %d , *p_lb = %p , * p_ub = %p , *p_st = %p ,p_last = %d , *p_last = %p, status = %p\n ",gtid,*p_lb,*p_ub,*p_st,p_last,*p_last,status));
 
-            KD_TRACE(10,("MON PRINT gtid = %d , *p_lb = %p , * p_ub = %p , *p_st = %p ,p_last = %d schedule = %d ,\n ",gtid,*p_lb,*p_ub,*p_st,p_last,pr->schedule));
+            KD_TRACE(10,("My gtid = %d , *p_lb = %p , * p_ub = %p , *p_st = %p ,p_last = %d schedule = %d ,\n ",gtid,*p_lb,*p_ub,*p_st,p_last,pr->schedule));
             __kmp_str_free( &buff );
         }
         #endif
