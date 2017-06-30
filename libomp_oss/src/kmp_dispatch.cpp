@@ -2137,9 +2137,7 @@ __kmp_dispatch_next(
                             if(__tmap[i]==(unsigned)gtid){
                                 incr = 1;
                                 pr->srr_index=i+1;
-                                pr->u.p.lb = i;
-                                pr-> u.p.ub = i+1;
-                                //pr -> u.p.st = 1;
+                                pr -> u.p.st = 1;
 
 
                                 *p_lb = i;
