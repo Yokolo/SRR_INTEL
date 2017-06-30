@@ -4,7 +4,7 @@
 
 Enter the directory libomp_oss  
 make  
-Then in the repertory tmp you can find the dynamic library : libiomp5.so
+Then in the directory tmp you can find the dynamic library : libiomp5.so
 
 ## How to use it ?
 You need to link this library with your application to be able to use SRR.

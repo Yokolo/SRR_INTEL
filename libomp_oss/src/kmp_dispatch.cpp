@@ -321,16 +321,7 @@ unsigned *srr_balance(unsigned *tasks, unsigned ntasks, unsigned nthreads)
     //assert(taskmap != NULL);
     
     /* Sort tasks. */
-    for (i=0;i<ntasks;i++){
-        KD_TRACE(1000,("Valeur de la case %d de la sortmap non triée : %d \n",i,tasks[i]));
-
-     }
-    sortmap = sort(tasks, ntasks);
-    for (i=0;i<ntasks;i++){
-        //KD_TRACE(1000,("Valeur de la case %d de la sortmap triée : %d \n",i,sortmap[i]));
-
-     }
-    
+    sortmap = sort(tasks, ntasks);    
     /* Assign tasks to threads. */
     if (ntasks & 1)
     {
@@ -360,11 +351,7 @@ unsigned *srr_balance(unsigned *tasks, unsigned ntasks, unsigned nthreads)
         }
     }
     
-    free(sortmap);
-    for (i=0;i<ntasks;i++){
-        KD_TRACE(1000,("Valeur de la case %d de la taskmap fin srr_balance : %d \n",i,taskmap[i]));
-     }
-    
+    free(sortmap); 
     return (taskmap);
 }
 
@@ -1172,32 +1159,16 @@ __kmp_dispatch_init(
     {
         unsigned nproc = th->th.th_team_nproc; // nproc = number of thread in team
         int masterid = team->t.t_master_tid; // get the masterID 
-        /*
-        KD_TRACE(100,("Je suis le thread T#%d dans srr\n",gtid));
-        if(gtid == masterid){
-            __ntasks=10;
-            __tasks=(unsigned *)malloc(__ntasks*sizeof(unsigned int));
-            unsigned int i =0;
-            for (i=0;i<__ntasks;i++){
-                __tasks[i]=i%4;
-            }
-            __tmap = srr_balance(__tasks, __ntasks, nproc);
-            for(i=0;i<__ntasks;i++)
-            {
-                KD_TRACE(100,("Valeur de la case %d de la taskmap : %d \n",i,__tmap[i]));
-            }
-        }*/
-        if(nproc ==1){
-            //lb=lb;
-            //ub=ub;
+        if(nproc ==1){ // if we are have only one thread calling
             pr -> u.p.lb = lb;
             pr -> u.p.ub = ub;
             pr -> u.p.tc = lb + ub +1;
-        }
-        else{
+        }// if
+        else{ // normal case
             unsigned int i =0;
             int booleen = 0;
             pr-> u.p.tc = 0;
+            // compute the number of iteration the calling thread have to do in this loop
             for(i=0;i<__ntasks;i++){
                 if (__tmap[i]==(unsigned)gtid && !booleen){
                     pr->srr_index=i;
@@ -1208,20 +1179,15 @@ __kmp_dispatch_init(
                     pr -> u.p.tc ++;
                     pr -> u.p.st = 1;
                     booleen = 1;
-                }
+                }// if
                 else if(__tmap[i]==(unsigned)gtid && booleen){
                     pr -> u.p.tc ++;
-                }
-            }
-        }
+                }// elseif
+            }// for
+        }// else
         tc=pr->u.p.tc;
         st=pr->u.p.st;
-        //pr -> u.p.tc --;
-
-
-            KD_TRACE(100,("Je suis le thread T#%d dans srr_INIT, LB = %d UB = %d TC = %d srr_index = %d \n",gtid,pr-> u.p.lb,pr-> u.p.ub,pr-> u.p.tc,pr->srr_index));
-            //KD_TRACE(100,("LB = %d UB = %d \n",lb,ub));
-        
+        KD_TRACE(100,("Thread T#%d in srr_INIT, LB = %d UB = %d TC = %d srr_index = %d \n",gtid,pr-> u.p.lb,pr-> u.p.ub,pr-> u.p.tc,pr->srr_index));        
         break;
     } // endcase
 
@@ -2113,46 +2079,38 @@ __kmp_dispatch_next(
             #endif // ( KMP_STATIC_STEAL_ENABLED )
             case kmp_sch_srr:
                 {
-                    KD_TRACE(100,("__kmp_dispatch_next: T#%d case SRR lb = %d ub = %d \n ",gtid,*p_lb,*p_ub));
-                    if(pr == NULL){
-                    }
                     unsigned int i ;
-                    if(pr->u.p.tc==0){
-                        status =0;
-                        pr->u.p.lb = 0;
-                        pr-> u.p.ub = 0;
-                        *p_lb = 0;
-                        *p_ub = 0;
+                    if(pr->u.p.tc==0){ //If we enter this part, the calling thread doesn't have work to do
+                        status = 0; // return 0 so the thread will not callback this routine.
+                        pr->u.p.lb = 0; // necessary for the thread to finish correctly
+                        pr-> u.p.ub = 0;// necessary for the thread to finish correctly
+                        *p_lb = 0;// necessary for the thread to finish correctly
+                        *p_ub = 0;// necessary for the thread to finish correctly
                         if ( p_st != NULL ) {
-                            *p_st = 0;
-                        }
- 
-                    }
-                    else{
+                            *p_st = 0;// necessary for the thread to finish correctly
+                        }// if
+                     }// if
+                    else{ // If we enter this part, the calling thread have work to do
                          KD_TRACE(100,("TRHEAD #%d TRIP COUNT =  %d\n",gtid,pr->u.p.tc));
                          KD_TRACE(100,("TRHEAD #%d SRR INDEX =  %d\n",gtid,pr->srr_index));
-
-
-                        for(i= pr->srr_index; i <__ntasks ;i++){
-                            if(__tmap[i]==(unsigned)gtid){
+                        for(i = pr->srr_index; i < __ntasks; i++){
+                            if(__tmap[i] == (unsigned)gtid){ 
                                 incr = 1;
-                                pr->srr_index=i+1;
+                                pr->srr_index = i+1;
                                 pr -> u.p.st = 1;
-
-
-                                *p_lb = i;
-                                *p_ub = i;
-                                pr->u.p.tc --;
-                                status=1;
+                                *p_lb = i; //set the bound of the iteration for a thread
+                                *p_ub = i; //set the bound of the iteration for a thread
+                                pr->u.p.tc --; //decrease the number of iteration that the thread needs to compute
+                                status=1; //return 1
                                  if ( p_st != NULL ) {
                                      *p_st = 1;
-                                }
+                                }// if
                                 break;
-                            }
-                        }
-                    }
+                            }// if
+                        }// for
+                    }// else
                     break;
-                }
+                }// case
             case kmp_sch_static_balanced:
                 {
                     KD_TRACE(100, ("__kmp_dispatch_next: T#%d kmp_sch_static_balanced case\n", gtid) );
